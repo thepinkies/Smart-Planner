@@ -1,7 +1,13 @@
 package edu.csupomona.cs480.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +42,7 @@ public class WebController {
 	 */
 	@Autowired
 	private UserManager userManager;
+	
 
 	/**
 	 * This is a simple example of how the HTTP API works.
@@ -70,6 +77,38 @@ public class WebController {
 	@RequestMapping(value = "/cs480/justingalloway", method = RequestMethod.GET)
 	String testingFour() {
 		return "Justin Galloway was here!";
+	}
+	
+	@RequestMapping(value = "/cs480/template/list", method = RequestMethod.GET)
+	List<String> PrintUsingJSoup() {
+		
+		Document doc;
+		List<String> web = new ArrayList<>();
+		try {
+			
+			// need http protocol
+			doc = Jsoup.connect("http://youtube.com").get();
+
+			// get page title
+			String title = doc.title();
+			web.add("title : " + title);
+
+			// get all links
+			Elements links = doc.select("a[href]");
+			for (Element link : links) {
+
+				// get the value from href attribute
+				web.add("\nlink : " + link.attr("href"));
+				web.add("text : " + link.text());
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return web;
+		
 	}
 	
 	/**

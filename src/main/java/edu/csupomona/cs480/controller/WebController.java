@@ -58,9 +58,12 @@ public class WebController {
 	}
 	
 	@RequestMapping(value = "/cs480/adrianhy", method = RequestMethod.GET)
-        String testingTwo() {
-                return "Adrian Hy was here!";
-        }
+		InputStream in = new URL("http://commons.apache.org").openStream();
+		try {
+		    System.out.println(IOUtils.toString(in));
+		} finally {
+		    IOUtils.closeQuietly(in);
+		}
 
 	@RequestMapping(value = "/cs480/isoldealfaro", method = RequestMethod.GET)
 	String testingThree() {

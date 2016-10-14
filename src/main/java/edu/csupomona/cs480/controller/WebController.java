@@ -85,7 +85,16 @@ public class WebController {
 	
 	@RequestMapping(value = "/cs480/justingalloway", method = RequestMethod.GET)
 	String testingFour() {
-		return "Justin Galloway was here!";
+		GuavaTester guavaTester = new GuavaTester();
+      
+		Integer a =  null;
+		Integer b =  new Integer(10);
+      
+		System.out.println(guavaTester.sum(a,b));
+   }
+
+   public Integer sum(Integer a, Integer b){
+      return a + b;
 	}
 	
 	@RequestMapping(value = "/cs480/template/list", method = RequestMethod.GET)

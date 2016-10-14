@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.apache.commons.math3.random.JDKRandomGenerator;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,12 +67,15 @@ public class WebController {
 	}
 	
 	@RequestMapping(value = "/cs480/adrianhy", method = RequestMethod.GET)
+	
+	public testingTwo(){
 		InputStream in = new URL("http://commons.apache.org").openStream();
 		try {
 		    System.out.println(IOUtils.toString(in));
 		} finally {
 		    IOUtils.closeQuietly(in);
 		}
+	}
 
 	@RequestMapping(value = "/cs480/isoldealfaro", method = RequestMethod.GET)
 	public testingThree() {

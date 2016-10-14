@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,8 +74,9 @@ public class WebController {
 		}
 
 	@RequestMapping(value = "/cs480/isoldealfaro", method = RequestMethod.GET)
-	String testingThree() {
-		return "Isolde Alfaro was here!";
+	public testingThree() {
+		RandomGenerator randomGenerator = new JDKRandomGenerator();
+		System.out.println(randomGenerator.nextInt());
 	}
 	
 	@RequestMapping(value = "/cs480/justingalloway", method = RequestMethod.GET)

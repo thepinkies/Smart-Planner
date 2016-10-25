@@ -1,6 +1,9 @@
 package edu.csupomona.cs480.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.apache.commons.math3.random.JDKRandomGenerator;
+import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,7 +72,7 @@ public class WebController {
 	
 	@RequestMapping(value = "/cs480/adrianhy", method = RequestMethod.GET)
 	
-	public testingTwo(){
+	public void testingTwo() throws MalformedURLException, IOException{
 		InputStream in = new URL("http://commons.apache.org").openStream();
 		try {
 		    System.out.println(IOUtils.toString(in));
@@ -78,20 +82,20 @@ public class WebController {
 	}
 
 	@RequestMapping(value = "/cs480/isoldealfaro", method = RequestMethod.GET)
-	public testingThree() {
+	public void testingThree() {
 		RandomGenerator randomGenerator = new JDKRandomGenerator();
 		System.out.println(randomGenerator.nextInt());
 	}
 	
-	@RequestMapping(value = "/cs480/justingalloway", method = RequestMethod.GET)
-	String testingFour() {
-		GuavaTester guavaTester = new GuavaTester();
-      
-		Integer a =  null;
-		Integer b =  new Integer(10);
-      
-		System.out.println(guavaTester.sum(a,b));
-   }
+//	@RequestMapping(value = "/cs480/justingalloway", method = RequestMethod.GET)
+//	String testingFour() {
+//		Guava guavaTester = new Guava();
+//      
+//		Integer a =  null;
+//		Integer b =  new Integer(10);
+//      
+//		System.out.println(guavaTester.sum(a,b));
+//   }
 
    public Integer sum(Integer a, Integer b){
       return a + b;

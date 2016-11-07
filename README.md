@@ -32,3 +32,6 @@ Running the Project Locally
 - http://localhost:8080/cs480/ping
 - http://localhost:8080/cs480/home
 
+----------------------------------------
+1. Adrian was here!
+2. Testing Testing 123

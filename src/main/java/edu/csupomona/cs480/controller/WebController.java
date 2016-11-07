@@ -62,7 +62,7 @@ public class WebController {
 		// You can replace this with other string,
 		// and run the application locally to check your changes
 		// with the URL: http://localhost:8080/
-		return "OK";
+		return "The Pinkies was HERE! Smart Planner COMING SOON!!!!";
 	}
 	
 	@RequestMapping(value = "/cs480/testing", method = RequestMethod.GET)

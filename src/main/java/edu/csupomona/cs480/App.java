@@ -1,13 +1,18 @@
 package edu.csupomona.cs480;
 
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.provider.FSUserManager;
 import edu.csupomona.cs480.data.provider.UserManager;
+import edu.csupomona.pomona.cs480.dao.PersonDAO;
 
 @Configuration
 @EnableAutoConfiguration
@@ -35,6 +40,24 @@ public class App {
      */
     public static void main(String[] args) throws Exception {
         // Run Spring Boot
-        SpringApplication.run(App.class, args);
+        //SpringApplication.run(App.class, args);
+    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		
+		PersonDAO personDAO = context.getBean(PersonDAO.class);
+		
+		Person person = new Person();
+		person.setName("Reyhan"); person.setCountry("Indonesia");
+		
+		personDAO.save(person);
+		
+		System.out.println("Person::"+person);
+		
+		List<Person> list = personDAO.list();
+		
+		for(Person p : list){
+			System.out.println("Person List::"+p);
+		}
+		//close resources
+		context.close();
     }
 }

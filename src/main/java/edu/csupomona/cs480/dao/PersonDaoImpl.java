@@ -1,4 +1,4 @@
-package edu.csupomona.pomona.cs480.dao;
+package edu.csupomona.cs480.dao;
 
 import java.util.List;
 
@@ -33,6 +33,30 @@ public class PersonDaoImpl implements PersonDAO {
 		List<Person> personList = session.createQuery("from Person").list();
 		session.close();
 		return personList;
+	}
+
+	@Override
+	public void updatePerson(Person p) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(p);
+		
+	}
+
+	@Override
+	public Person getPersonById(int id) {
+		Session session = this.sessionFactory.getCurrentSession();		
+		Person p = (Person) session.load(Person.class, new Integer(id));
+		return p;
+	}
+
+	@Override
+	public void removePerson(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Person p = (Person) session.load(Person.class, new Integer(id));
+		if(null != p){
+			session.delete(p);
+		}
+		
 	}
 
 }

@@ -1,4 +1,4 @@
-package edu.csupomona.pomona.cs480.dao;
+package edu.csupomona.cs480.dao;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.Subjects;
 
 
@@ -26,14 +27,6 @@ public class SubjectsDAOImpl implements SubjectsDAO{
 		session.close();
 	}
 	
-	public void update(Subjects subject) {
-		Session session = this.sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.saveOrUpdate(subject);
-		tx.commit();
-		session.close();
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Subjects> list() {
@@ -41,5 +34,29 @@ public class SubjectsDAOImpl implements SubjectsDAO{
 		List<Subjects> subjectsList = session.createQuery("from Subject").list();
 		session.close();
 		return subjectsList;
+	}
+
+	@Override
+	public Subjects getPersonById(int id) {
+		Session session = this.sessionFactory.getCurrentSession();		
+		Subjects s = (Subjects) session.load(Subjects.class, new Integer(id));
+		return s;
+	}
+
+	@Override
+	public void removePerson(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Subjects p = (Subjects) session.load(Subjects.class, new Integer(id));
+		if(null != p){
+			session.delete(p);
+		}
+		
+	}
+
+	@Override
+	public void update(Subjects subject) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(subject);
+		
 	}
 }

@@ -1,4 +1,4 @@
-package edu.csupomona.pomona.cs480.dao;
+package edu.csupomona.cs480.dao;
 
 import java.util.List;
 
@@ -11,5 +11,9 @@ public interface SubjectsDAO {
 	public List<Subjects> list();
 
 	public void update(Subjects subject);
+	
+	public Subjects getPersonById(int id);
+	
+	public void removePerson(int id);
 	
 }

@@ -9,12 +9,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import edu.csupomona.cs480.dao.PersonDAO;
+import edu.csupomona.cs480.dao.SubjectsDAO;
 import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.Subjects;
 import edu.csupomona.cs480.data.provider.FSUserManager;
 import edu.csupomona.cs480.data.provider.UserManager;
-import edu.csupomona.pomona.cs480.dao.PersonDAO;
-import edu.csupomona.pomona.cs480.dao.SubjectsDAO;
 
 @Configuration
 @EnableAutoConfiguration
@@ -68,7 +68,6 @@ public class App {
 		//subject.setId(1);
 		subject.setSubjectName("CS 480");
 		subject.setDailyTasks("Get this Smart Planner Done! This is fricking awesome!");
-		
 		
 		subjectsDAO.update(subject);
 		

@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import edu.csupomona.cs480.data.Person;
+import edu.csupomona.cs480.data.Subjects;
 import edu.csupomona.cs480.data.provider.FSUserManager;
 import edu.csupomona.cs480.data.provider.UserManager;
 import edu.csupomona.pomona.cs480.dao.PersonDAO;
+import edu.csupomona.pomona.cs480.dao.SubjectsDAO;
 
 @Configuration
 @EnableAutoConfiguration
@@ -44,15 +46,32 @@ public class App {
     	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
 		
 		PersonDAO personDAO = context.getBean(PersonDAO.class);
+		SubjectsDAO subjectsDAO = context.getBean(SubjectsDAO.class);
 		
 		Person person = new Person();
 		person.setName("Reyhan"); person.setCountry("Indonesia");
 		
+		Person personTwo = new Person();
+		personTwo.setName("Adrian Long");
+		personTwo.setCountry("Vietnam");
+		
+
 		personDAO.save(person);
+		personDAO.save(personTwo);
 		
 		System.out.println("Person::"+person);
 		
 		List<Person> list = personDAO.list();
+		
+		Subjects subject = new Subjects();
+		
+		//subject.setId(1);
+		subject.setSubjectName("CS 480");
+		subject.setDailyTasks("Get this Smart Planner Done! This is fricking awesome!");
+		
+		
+		subjectsDAO.update(subject);
+		
 		
 		for(Person p : list){
 			System.out.println("Person List::"+p);

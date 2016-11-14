@@ -35,3 +35,21 @@ Running the Project Locally
 ----------------------------------------
 1. Adrian was here!
 2. Testing Testing 123
+3. Added some classes that will work with my Local SQL Tables
+4. Use the following code to create the tables on your end, we will figure out how to deploy a unified database
+- CREATE TABLE subjects (
+	id int(11) unsigned NOT NULL AUTO_INCREMENT,
+	subject_name varchar(75),
+	daily_tasks TEXT,
+	PRIMARY KEY(id),
+  );
+
+- CREATE TABLE daily_tasks (
+	urgent_tasks_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+	urgent_task TEXT,
+	subects_Id int,
+	PRIMARY KEY(urgen_tasks_id),
+	FOREIGN KEY(subjects_id) REFERENCES subjects(id),
+  );
+
+- The Listed tables should work. If an error were to occur, just text me and I will try to debug it with you.

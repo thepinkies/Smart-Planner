@@ -42,40 +42,41 @@ public class App {
      */
     public static void main(String[] args) throws Exception {
         // Run Spring Boot
-        //SpringApplication.run(App.class, args);
-    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-		
-		PersonDAO personDAO = context.getBean(PersonDAO.class);
-		SubjectsDAO subjectsDAO = context.getBean(SubjectsDAO.class);
-		
-		Person person = new Person();
-		person.setName("Reyhan"); person.setCountry("Indonesia");
-		
-		Person personTwo = new Person();
-		personTwo.setName("Adrian Long");
-		personTwo.setCountry("Vietnam");
-		
-
-		personDAO.save(person);
-		personDAO.save(personTwo);
-		
-		System.out.println("Person::"+person);
-		
-		List<Person> list = personDAO.list();
-		
-		Subjects subject = new Subjects();
-		
-		//subject.setId(1);
-		subject.setSubjectName("CS 480");
-		subject.setDailyTasks("Get this Smart Planner Done! This is fricking awesome!");
-		
-		subjectsDAO.update(subject);
-		
-		
-		for(Person p : list){
-			System.out.println("Person List::"+p);
-		}
-		//close resources
-		context.close();
+        SpringApplication.run(App.class, args);
+//    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+//		
+//		PersonDAO personDAO = context.getBean(PersonDAO.class);
+//		SubjectsDAO subjectsDAO = context.getBean(SubjectsDAO.class);
+//		
+//		Person person = new Person();
+//		person.setName("Reyhan"); person.setCountry("Indonesia");
+//		
+//		Person personTwo = new Person();
+//		personTwo.setName("Adrian Long");
+//		personTwo.setCountry("Vietnam");
+//		
+//
+//		personDAO.save(person);
+//		personDAO.save(personTwo);
+//		
+//		System.out.println("Person::"+person);
+//		
+//		List<Person> list = personDAO.list();
+//		
+//		Subjects subject = new Subjects();
+//		
+//		//subject.setId(1);
+//		subject.setSubjectName("CS 480");
+//		subject.setDailyTasks("Get this Smart Planner Done! This is fricking awesome!");
+//		
+//		subjectsDAO.save(subject);
+//		
+//		
+//		for(Person p : list){
+//			System.out.println("Person List::"+p);
+//		}
+//		//close resources
+//		context.close();
+        
     }
 }

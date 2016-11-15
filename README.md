@@ -37,7 +37,7 @@ Running the Project Locally
 2. Testing Testing 123
 3. Added some classes that will work with my Local SQL Tables
 4. Use the following code to create thfe tables on your end, we will figure out how to deploy a unified database
-- CREATE TABLE subjects( id int(11) unsigned NOT NULL AUTO_INCREMENT,  subjectName VARCHAR(50), dailyTasks TEXT, PRIMARY KEY(id)
+- CREATE TABLE subjects( id int(11) unsigned NOT NULL AUTO_INCREMENT,  subjectName VARCHAR(50), dailyTasks TEXT, PRIMARY KEY(id));
 
 - CREATE TABLE due_dates (due_dates_id int(11) unsigned NOT NULL AUTO_INCREMENT, urgent_task varchar(75), subjects_id int unsigned, primary key(due_dates_id), foreign key(subjects_id) references subjects(id));
 

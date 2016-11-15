@@ -15,6 +15,7 @@ import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.csupomona.cs480.App;
+import edu.csupomona.cs480.dao.PersonDAO;
+import edu.csupomona.cs480.dao.SubjectsDAO;
+import edu.csupomona.cs480.data.Person;
+import edu.csupomona.cs480.data.Subjects;
 import edu.csupomona.cs480.data.User;
 import edu.csupomona.cs480.data.provider.UserManager;
 
@@ -66,8 +71,14 @@ public class WebController {
 	}
 	
 	@RequestMapping(value = "/cs480/testing", method = RequestMethod.GET)
-	String testing() {
-		return "testing exercise 3";
+	List<Person> testing() {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		PersonDAO personDAO = context.getBean(PersonDAO.class);
+
+		List<Person> list = personDAO.list();
+		context.close();
+		
+		return list;
 	}
 	
 	@RequestMapping(value = "/cs480/adrianhy", method = RequestMethod.GET)
@@ -87,16 +98,6 @@ public class WebController {
 		System.out.println(randomGenerator.nextInt());
 	}
 	
-//	@RequestMapping(value = "/cs480/justingalloway", method = RequestMethod.GET)
-//	String testingFour() {
-//		Guava guavaTester = new Guava();
-//      
-//		Integer a =  null;
-//		Integer b =  new Integer(10);
-//      
-//		System.out.println(guavaTester.sum(a,b));
-//   }
-
    public Integer sum(Integer a, Integer b){
       return a + b;
 	}

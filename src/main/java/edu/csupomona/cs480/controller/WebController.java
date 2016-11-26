@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
+
 
 import edu.csupomona.cs480.App;
 import edu.csupomona.cs480.dao.PersonDAO;
@@ -69,6 +71,8 @@ public class WebController {
 		// with the URL: http://localhost:8080/
 		return "The Pinkies was HERE! Smart Planner COMING SOON!!!!";
 	}
+
+
 	
 	@RequestMapping(value = "/cs480/testing", method = RequestMethod.GET)
 	List<Person> testing() {
@@ -208,10 +212,25 @@ public class WebController {
 	 * functionalities used in this web service.
 	 */
 	@RequestMapping(value = "/cs480/home", method = RequestMethod.GET)
-	ModelAndView getUserHomepage() {
-		ModelAndView modelAndView = new ModelAndView("home");
-		modelAndView.addObject("users", listAllUsers());
+	ModelAndView getUserHomepag() {
+		ModelAndView modelAndView = new ModelAndView("test");
 		return modelAndView;
 	}
 
+	@RequestMapping(value = "/cs480/hometest", method = RequestMethod.GET)
+	ModelAndView getHomeTest() {
+		ModelAndView modelAndView = new ModelAndView("home");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/cs480/gettesting", method = RequestMethod.GET)
+	List<Subjects> gettesting() {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		SubjectsDAO subjectsDAO = (SubjectsDAO) context.getBean(PersonDAO.class);
+
+		List<Subjects> list = subjectsDAO.list();
+		context.close();
+
+		return list;
+	}
 }

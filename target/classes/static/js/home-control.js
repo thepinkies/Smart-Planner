@@ -82,3 +82,24 @@ function getUser(userId) {
 		alert("Invalid user Id");
 	}
 }
+
+function getSubject() {
+//	var userId = $('#query_id').val();
+	$.ajax(
+			{
+				type : "GET",
+				url  : "/cs480/testing",
+				data : {
+				},
+				success : function(result) {
+				    var subjects = JSON.parse(result);
+					$('#status').text(subjects[0].id);
+				},
+				error: function (jqXHR, exception) {
+					$('#status').text("Failed to get the status");
+				}
+			});
+
+
+}
+

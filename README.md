@@ -33,12 +33,29 @@ Running the Project Locally
 - http://localhost:8080/cs480/home
 
 ----------------------------------------
-1. Adrian was here!
-2. Testing Testing 123
-3. Added some classes that will work with my Local SQL Tables
-4. Use the following code to create thfe tables on your end, we will figure out how to deploy a unified database
-- CREATE TABLE subjects( id int(11) unsigned NOT NULL AUTO_INCREMENT,  subjectName VARCHAR(50), dailyTasks TEXT, PRIMARY KEY(id));
+This is the previous create table ignore it!
 
 - CREATE TABLE due_dates (due_dates_id int(11) unsigned NOT NULL AUTO_INCREMENT, urgent_task varchar(75), subjects_id int unsigned, primary key(due_dates_id), foreign key(subjects_id) references subjects(id));
 
 - The Listed tables should work. If an error were to occur, just text me and I will try to debug it with you.
+
+NEW TABLE 
+
+DROP TABLE IF EXISTS `person`;
+CREATE TABLE `person` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `subjects`;
+CREATE TABLE `subjects` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `cardtext` TEXT NOT NULL,
+  `date` int(11) unsigned DEFAULT NULL,  
+  `user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  foreign key(user_id) references person(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,6 +1,8 @@
 package edu.csupomona.cs480;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -9,13 +11,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.hibernate.Session;
 
-import edu.csupomona.cs480.dao.PersonDAO;
-import edu.csupomona.cs480.dao.SubjectsDAO;
 import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.Subjects;
 import edu.csupomona.cs480.data.provider.FSUserManager;
 import edu.csupomona.cs480.data.provider.UserManager;
+import edu.csupomona.cs480.util.HibernateUtil;
 
 //@Configuration
 //@EnableAutoConfiguration
@@ -45,40 +47,33 @@ public class App {
     public static void main(String[] args) throws Exception {
         // Run Spring Boot
         SpringApplication.run(App.class, args);
-//    	ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-//		
-//		PersonDAO personDAO = context.getBean(PersonDAO.class);
-//		SubjectsDAO subjectsDAO = context.getBean(SubjectsDAO.class);
-//		
-//		Person person = new Person();
-//		person.setName("Reyhan"); person.setCountry("Indonesia");
-//		
-//		Person personTwo = new Person();
-//		personTwo.setName("Adrian Long");
-//		personTwo.setCountry("Vietnam");
-//		
+
+// before running springapplication run this first to create data into the table
+//    	Session session = HibernateUtil.getSessionFactory().openSession();
 //
-//		personDAO.save(person);
-//		personDAO.save(personTwo);
-//		
-//		System.out.println("Person::"+person);
-//		
-//		List<Person> list = personDAO.list();
-//		
-//		Subjects subject = new Subjects();
-//		
-//		//subject.setId(1);
-//		subject.setSubjectName("CS 480");
-//		subject.setDailyTasks("Get this Smart Planner Done! This is fricking awesome!");
-//		
-//		subjectsDAO.save(subject);
-//		
-//		
-//		for(Person p : list){
-//			System.out.println("Person List::"+p);
-//		}
-//		//close resources
-//		context.close();
+//    	session.beginTransaction();
+//    	
+//    	Person PersonA = new Person("Adrian", "cs480");
+//    	session.save(PersonA);
+//    	Subjects subject1 = new Subjects("cs311", "hello world", 12, PersonA);
+//    	Subjects subject2 = new Subjects("cs480", "hello world", 12, PersonA);
+//    	Subjects subject3 = new Subjects("cs240", "hello world", 12, PersonA);
+//    	
+//        Set subjectset = new HashSet<Subjects>();
+//        subjectset.add(subject1);
+//        subjectset.add(subject2);
+//        subjectset.add(subject3);
+//        
+//        
+//        PersonA.setSubjects(subjectset);
+//        
+//        session.save(subject1);
+//        session.save(subject2);
+//        session.save(subject3);
+//        
+//        session.getTransaction().commit();
+// end of the line
+    	
         
     }
 }

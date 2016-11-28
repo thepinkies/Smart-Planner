@@ -1,11 +1,20 @@
 package edu.csupomona.cs480.data;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -16,8 +25,26 @@ public class Subjects {
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private String subjectName;
-	private String dailyTasks;
+	private String name;
+	private String cardtext;
+	private int date;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	@JsonIgnore
+	private Person person;
+	
+	public Subjects()
+	{
+		
+	}
+	
+	public Subjects(String name, String cardtext, int date, Person person) {
+        this.name = name;
+        this.cardtext = cardtext;
+        this.date = date;
+        this.person = person;
+    }
 	
 	public int getId(){
 		return id;
@@ -27,25 +54,41 @@ public class Subjects {
 		this.id = id;
 	}
 	
+	public int getDate(){
+		return date;
+	}
+	
+	public void setDate(int date) {
+		this.date = date;
+	}
+	
 	public String getSubjectName() {
-		return subjectName;
+		return name;
 	}
 	
 	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
+		this.name = subjectName;
 	}
 	
-	public String getDailyTasks() {
-		return dailyTasks;
+	public String getCardText() {
+		return cardtext;
 	}
 	
-	public void setDailyTasks(String dailyTasks) {
-		this.dailyTasks = dailyTasks;
+	public void setCardText(String dailyTasks) {
+		this.cardtext = dailyTasks;
 	}
+	
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 	
 	@Override
 	public String toString(){
-		return "id="+id+", name="+subjectName+", country="+dailyTasks;
+		return "id="+id+", name="+name+", country="+cardtext;
 	}
 	
 }

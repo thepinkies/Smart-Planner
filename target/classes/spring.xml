@@ -10,9 +10,10 @@
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/smartplanner" />
-		<property name="username" value="reyhan" />
-		<property name="password" value="cs480" />
+		<property name="username" value="root" />
+		<property name="password" value="S@yg00dwords!!" />
 	</bean>
+
 
 
 <!-- Hibernate 4 SessionFactory Bean definition -->

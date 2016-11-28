@@ -1,16 +1,23 @@
 package edu.csupomona.cs480.data;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Entity bean with JPA annotations
  * Hibernate provides JPA implementation
- * @author pankaj
  *
  */
 @Entity
@@ -22,10 +29,23 @@ public class Person {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	private String name;
+	private String username;
 	
-	private String country;
+	private String password;
+	
+	
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="person")
+	@JsonIgnore
+	private Set<Subjects> subjects;
 
+	public Person() {
+	}
+	
+	 public Person(String name, String password) {
+	        this.username = name;
+	        this.password = password;
+	 }
+	
 	public int getId() {
 		return id;
 	}
@@ -35,23 +55,31 @@ public class Person {
 	}
 
 	public String getName() {
-		return name;
+		return username;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.username = name;
 	}
 
-	public String getCountry() {
-		return country;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+	
+    public Set<Subjects> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subjects> subjects) {
+        this.subjects = subjects;
+    }
 	
 	@Override
 	public String toString(){
-		return "id="+id+", name="+name+", country="+country;
+		return "id="+id+", username="+username + "password="+password;
 	}
 }

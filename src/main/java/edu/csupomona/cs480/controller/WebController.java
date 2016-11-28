@@ -6,7 +6,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,13 +30,19 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
 
+
+
+
+
+
+
+
 import edu.csupomona.cs480.App;
-import edu.csupomona.cs480.dao.PersonDAO;
-import edu.csupomona.cs480.dao.SubjectsDAO;
 import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.Subjects;
 import edu.csupomona.cs480.data.User;
 import edu.csupomona.cs480.data.provider.UserManager;
+import edu.csupomona.cs480.util.HibernateUtil;
 
 
 /**
@@ -56,6 +67,20 @@ public class WebController {
 	@Autowired
 	private UserManager userManager;
 	
+	/*********
+	 * This basically get all user info by entering the username
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/cs480/getid/{userId}", method = RequestMethod.GET)
+	Set<Subjects> getIdfromUserName(@PathVariable("userId") String userId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Person person = (Person) session.createQuery("FROM Person where username = '"+ userId + "'").uniqueResult();
+		if(person == null)
+			return null;
+		Set<Subjects> personList = session.get(Person.class, person.getId()).getSubjects();
+		return personList;
+	}
 
 	/**
 	 * This is a simple example of how the HTTP API works.
@@ -71,72 +96,7 @@ public class WebController {
 		// with the URL: http://localhost:8080/
 		return "The Pinkies was HERE! Smart Planner COMING SOON!!!!";
 	}
-
-
 	
-	@RequestMapping(value = "/cs480/testing", method = RequestMethod.GET)
-	List<Person> testing() {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-		PersonDAO personDAO = context.getBean(PersonDAO.class);
-
-		List<Person> list = personDAO.list();
-		context.close();
-		
-		return list;
-	}
-	
-	@RequestMapping(value = "/cs480/adrianhy", method = RequestMethod.GET)
-	
-	public void testingTwo() throws MalformedURLException, IOException{
-		InputStream in = new URL("http://commons.apache.org").openStream();
-		try {
-		    System.out.println(IOUtils.toString(in));
-		} finally {
-		    IOUtils.closeQuietly(in);
-		}
-	}
-
-	@RequestMapping(value = "/cs480/isoldealfaro", method = RequestMethod.GET)
-	public void testingThree() {
-		RandomGenerator randomGenerator = new JDKRandomGenerator();
-		System.out.println(randomGenerator.nextInt());
-	}
-	
-   public Integer sum(Integer a, Integer b){
-      return a + b;
-	}
-	
-	@RequestMapping(value = "/cs480/template/list", method = RequestMethod.GET)
-	List<String> PrintUsingJSoup() {
-		
-		Document doc;
-		List<String> web = new ArrayList<>();
-		try {
-			
-			// need http protocol
-			doc = Jsoup.connect("http://youtube.com").get();
-
-			// get page title
-			String title = doc.title();
-			web.add("title : " + title);
-
-			// get all links
-			Elements links = doc.select("a[href]");
-			for (Element link : links) {
-
-				// get the value from href attribute
-				web.add("\nlink : " + link.attr("href"));
-				web.add("text : " + link.text());
-
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return web;
-		
-	}
 	
 	/**
 	 * This is a simple example of how to use a data manager
@@ -223,6 +183,7 @@ public class WebController {
 		return modelAndView;
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/cs480/gettesting", method = RequestMethod.GET)
 	List<Subjects> gettesting() {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
@@ -234,4 +195,6 @@ public class WebController {
 		return list;
 	}
 
+=======
+>>>>>>> New tables and WebController
 }

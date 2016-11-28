@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.Subjects;
 
 

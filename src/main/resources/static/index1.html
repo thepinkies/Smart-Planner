@@ -29,16 +29,22 @@
 	</div>
 </md-toolbar>
 
-<div layout="row" ng-controller="report as ReportController" flex>
+<div layout="row" ng-controller="CampaignController as campaignCtrl" flex>
 
 
 	<md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" flex>
 		<md-content layout='column' layout-align="space-around stretch">
-			<md-button class="md-default" ng-href="/">Home</md-button>
+			<md-button class="md-default" ng-href="/admin">Go to Admin Interface</md-button>
 			<md-divider md-whiteframe="5"></md-divider>
 			<md-button ng-click="navCtrl.selectNavTab('send_emails')" ng-class="{ 'md-primary': navCtrl.isSelected('send_emails')}"> Send Emails for Campaign</md-button>
 			<md-divider md-whiteframe="5"></md-divider>
 			<md-button class="md-default" ng-click="navCtrl.selectNavTab('edit_reports')" ng-class ="{'md-primary': navCtrl.isSelected('edit_reports')}">View Reports</md-button>
+			<md-divider md-whiteframe="5"></md-divider>
+			<md-button class="md-default" ng-click="navCtrl.selectNavTab('edit_landing_templates')" ng-class="{'md-primary': navCtrl.isSelected('edit_landing_templates')}">Landing Templates</md-button>
+			<md-divider md-whiteframe="5"></md-divider>
+			<md-button class="md-default" ng-click="navCtrl.selectNavTab('edit_email_templates')" ng-class="{'md-primary': navCtrl.isSelected('edit_email_templates')}">Email Templates</md-button>
+			<md-divider md-whiteframe="5"></md-divider>
+			<md-button class="md-default" ng-click="navCtrl.selectNavTab('edit_campaign')" ng-class="{'md-primary': navCtrl.isSelected('edit_campaign')}">Create Campaign</md-button>
 			<md-divider md-whiteframe="5"></md-divider>
 		</md-content>
 	</md-sidenav>
@@ -166,6 +172,162 @@
 		</md-tabs>
 	</div>
 
+	<div layout="column" flex id="LandingUpdate" ng-show="navCtrl.isSelected('edit_landing_templates')" ng-controller="LandingController as landingCtrl">
+
+		<!--<md-card flex layout="column" md-whiteframe="5">-->
+		<md-toolbar md-whiteframe="5">
+			<div class="md-toolbar-tools">
+				Landing Templates
+			</div>
+		</md-toolbar>
+
+		<md-tabs md-dynamic-height md-border-bottom>
+
+			<md-tab label="Update Template" md-whiteframe="3">
+
+				<md-content flex layer="column" class="md-padding">
+
+					<md-select placeholder="Choose Landing Template" ng-model="ldTemplate">
+
+						<md-option ng-repeat="ldTemplate in landingCtrl.landing" ng-value="ldTemplate">
+							{{ldTemplate.name}}
+						</md-option>
+
+					</md-select>
+
+					<md-input-container class="md-block">
+						<input required name="templateName" ng-model="ldTemplate.name" placeholder="Name">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<input required name="templateString" ng-model="ldTemplate.landing_template_string" placeholder="Landing Template String">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<textarea required ng-model="ldTemplate.splash_template_string" rows="10" placeholder="Html Template (Note: Drag to expand text area.)" md-select-on-focus></textarea>
+					</md-input-container>
+
+					<div>
+						<md-button ng-click="landingCtrl.updateTemplate($event, ldTemplate)">Update</md-button>
+						<md-button ng-click="landingCtrl.deleteTemplate($event, ldTemplate)">Delete</md-button>
+					</div>
+
+					<md-divider md-whiteframe="3"></md-divider>
+				</md-content>
+			</md-tab>
+
+			<md-divider md-whiteframe="1"></md-divider>
+
+			<md-tab label="Create New Template" md-whiteframe="3">
+
+				<md-content flex layer="column" class="md-padding">
+					<md-input-container class="md-block">
+						<input required name="newTemplateName" ng-model="landingCtrl.newLandingTemplate.name" placeholder="Name">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<input required name="newLandingName" ng-model="landingCtrl.newLandingTemplate.landing_template_string" placeholder="Landing Template String">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<textarea required ng-model="landingCtrl.newLandingTemplate.splash_template_string" rows="10" placeholder="HTML Template"></textarea>
+					</md-input-container>
+
+					<md-button ng-click="landingCtrl.addNew($event)">Create</md-button>
+
+					<md-divider md-whiteframe="3"></md-divider>
+				</md-content>
+
+			</md-tab>
+
+		</md-tabs>
+
+		<!--</md-card>-->
+
+	</div>
+
+	<div layout ="column" flex id="UpdateEmailTemplate" ng-show="navCtrl.isSelected('edit_email_templates')" ng-controller="EmailTemplateController as templateCtrl">
+
+		<!--<md-card layout="column">-->
+
+		<md-toolbar md-whiteframe="3">
+			<div class="md-toolbar-tools">
+				Email Templates
+			</div>
+		</md-toolbar>
+
+		<md-tabs md-dynamic-height md-border-bottom>
+
+			<md-tab label="Update Template" md-whiteframe="3">
+
+				<md-content flex layer="column" class="md-padding">
+
+					<md-select placeholder="Choose Email Template" ng-model="emTemplate">
+						<md-option ng-repeat="emTemplate in templateCtrl.eTemplates" ng-value="emTemplate">
+							{{emTemplate.name}}
+						</md-option>
+
+					</md-select>
+
+					<md-input-container class="md-block">
+						<input required name="emailTemplateName" ng-model="emTemplate.name" placeholder="Email Name">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<input required name="emailSubject" ng-model="emTemplate.country" placeholder="Subject">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<input required name="bodyText" ng-model="emTemplate.body_text" placeholder="Body Text">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<textarea required ng-model="emTemplate.body_html" rows="10" placeholder="Html Body" md-select-on-focus></textarea>
+					</md-input-container>
+
+					<md-button ng-click="templateCtrl.updateTemplate($event, emTemplate)">Update</md-button>
+					<md-button ng-click="templateCtrl.deleteTemplate($event, emTemplate)">Delete</md-button>
+
+					<md-divider md-whiteframe="3"></md-divider>
+
+				</md-content>
+
+			</md-tab>
+
+			<md-tab label="Create Template" md-whiteframe="3">
+
+				<md-content flex layer="column" class="md-padding">
+
+					<md-input-container class="md-block">
+						<input required name="emailTemplateName" ng-model="templateCtrl.newEmailTemplate.name" placeholder="Email Name">
+					</md-input-container>
+					{{templateCtrl.newEmailTemplate.name}}
+					<md-input-container class="md-block">
+						<input required name="emailSubject" ng-model="templateCtrl.newEmailTemplate.subject" placeholder="Subject">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<input required name="bodyText" ng-model="templateCtrl.newEmailTemplate.body_text" placeholder="Body Text">
+					</md-input-container>
+
+					<md-input-container class="md-block">
+						<textarea required ng-model="templateCtrl.newEmailTemplate.body_html" rows="10" placeholder="Html Body" md-select-on-focus></textarea>
+					</md-input-container>
+
+					<md-button ng-click="templateCtrl.addNew($event)">Create</md-button>
+
+
+					<md-divider md-whiteframe="3"></md-divider>
+
+				</md-content>
+
+			</md-tab>
+
+		</md-tabs>
+		<!--</md-card>-->
+
+	</div>
+
 	<div layout="column" flex id="ResendEmail" ng-show="navCtrl.isSelected('send_emails')">
 
 		<md-toolbar md-whiteframe="5">
@@ -179,7 +341,7 @@
 			<section layout="row" class="md-padding">
 				<md-select layout="row" flex placeholder="Select a Campaign" ng-model="campaign" ng-change="campaignCtrl.filterCampaign(campaign)">
 
-					<md-option ng-repeat="Report in campaignCtrl.campaigns" ng-value="campaign">
+					<md-option ng-repeat="campaign in campaignCtrl.campaigns" ng-value="campaign">
 						{{campaign.name}}
 					</md-option>
 
@@ -194,7 +356,6 @@
 
 				<section flex ="50" class="md-padding" md-whiteframe="3">
 
-					<md-card>
 					<form layout="column" action="/emails/upload" method="post" enctype="multipart/form-data" class="md-padding" flex>
 						{{csrf_token}}
 						<md-input-container>
@@ -205,7 +366,6 @@
 
 						<!--<input type="submit" id="uploadButton" value="submit" name="csv" flex>-->
 					</form>
-					</md-card>
 
 				</section>
 
@@ -305,11 +465,11 @@
 
 			<section flex>
 
-				<md-list flex ng-repeat="subjects in reports.subjects"class="md-padding">
+				<md-list flex ng-repeat="campaign in campaignCtrl.campaigns"class="md-padding">
 
 					<div flex layout="row">
 
-						<md-toolbar layout-align="center stretch" label="subjects.name" class="md-hue-3" flex="35">
+						<md-toolbar layout-align="center stretch" label="campaign.name" class="md-hue-3" flex="35">
 							<b class="md-padding"> {{ campaign.name }} </b>
 						</md-toolbar>
 

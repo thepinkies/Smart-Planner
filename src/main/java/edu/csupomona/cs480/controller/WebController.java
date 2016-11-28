@@ -219,18 +219,19 @@ public class WebController {
 
 	@RequestMapping(value = "/cs480/hometest", method = RequestMethod.GET)
 	ModelAndView getHomeTest() {
-		ModelAndView modelAndView = new ModelAndView("home");
+		ModelAndView modelAndView = new ModelAndView("index");
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/cs480/gettesting", method = RequestMethod.GET)
 	List<Subjects> gettesting() {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-		SubjectsDAO subjectsDAO = (SubjectsDAO) context.getBean(PersonDAO.class);
+		SubjectsDAO subjectsDAO = context.getBean(SubjectsDAO.class);
 
 		List<Subjects> list = subjectsDAO.list();
 		context.close();
 
 		return list;
 	}
+
 }

@@ -27,13 +27,62 @@
         </div>
     </md-toolbar>
 
-    <div ng-controller="CardController as Cards">
+
+    <div class = "Add event">
+        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Create Event</span>
+                </md-card-title-text>
+
+                <md-content layout-padding>
+                    <div>
+                        <form ng-submit="CardController.addSubject(subject, date, event, details)">
+                            <div layout-gt-xs="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Enter Subject</label>
+                                    <input required name= "subject" type="text" ng-model="subject">
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>Enter date</label>
+                                    <md-datepicker required name= "Date" type="text" ng-model="date"></md-datepicker>
+                                </md-input-container>
+                            </div>
+
+                            <div layout-gt-s="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Enter event</label>
+                                    <input required name= "Event" type="text" ng-model="event">
+                                </md-input-container>
+                            </div>
+
+                            <divlayout-gt-xs="row">
+                            <md-input-container class="md-block">
+                                <label>Enter details</label>
+                                <input ng-model="details">
+                            </md-input-container>
+                    </div>
+
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button type = "submit">Add Event</md-button>
+                    </md-card-actions>
+
+                    </form>
+    </div>
+    </md-content>
+    </md-card-title>
+    </md-card>
+</div>
+
+
+<div ng-controller="CardController as Cards">
 
     <md-list ng-repeat="subject in Cards.subjects">
         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">{{subject.name}}</span>
+                    <span class="md-headline">{{subject.subjectName}}</span>
                     <span class="md-subhead">Large</span>
                 </md-card-title-text>
                 <md-card-title-media>
@@ -46,29 +95,23 @@
             </md-card-actions>
         </md-card>
     </md-list>
-    </div>
+</div>
 
-    <
 
-    <md-button alkasjdflkajsdflkjasf="deletename()"
 
-               alsklasjdf
-               asdkfja
-           sfkjasdf
-
-    <!-- Angular Material Dependencies -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
-    <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.min.js"></script>
-    <script src="/js/Pinkies.js"></script>
+<!-- Angular Material Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+<!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.min.js"></script>
+<script src="/js/Pinkies.js"></script>
 
 </body>
 </html>

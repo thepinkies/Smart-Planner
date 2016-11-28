@@ -29,14 +29,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
-
-
-
-
-
-
-
-
 import edu.csupomona.cs480.App;
 import edu.csupomona.cs480.data.Person;
 import edu.csupomona.cs480.data.Subjects;
@@ -183,18 +175,4 @@ public class WebController {
 		return modelAndView;
 	}
 
-<<<<<<< HEAD
-	@RequestMapping(value = "/cs480/gettesting", method = RequestMethod.GET)
-	List<Subjects> gettesting() {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
-		SubjectsDAO subjectsDAO = context.getBean(SubjectsDAO.class);
-
-		List<Subjects> list = subjectsDAO.list();
-		context.close();
-
-		return list;
-	}
-
-=======
->>>>>>> New tables and WebController
 }

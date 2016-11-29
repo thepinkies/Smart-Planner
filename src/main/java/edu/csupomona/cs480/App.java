@@ -45,20 +45,20 @@ public class App {
      * you cannot put extra main method when building your project.
      */
     public static void main(String[] args) throws Exception {
-        // Run Spring Boot
+        //Run Spring Boot
         SpringApplication.run(App.class, args);
 
 // before running springapplication run this first to create data into the table
 //    	Session session = HibernateUtil.getSessionFactory().openSession();
 //
 //    	session.beginTransaction();
-//    	
+//
 //    	Person PersonA = new Person("Adrian", "cs480");
 //    	session.save(PersonA);
 //    	Subjects subject1 = new Subjects("cs311", "hello world", 12, PersonA);
 //    	Subjects subject2 = new Subjects("cs480", "hello world", 12, PersonA);
 //    	Subjects subject3 = new Subjects("cs240", "hello world", 12, PersonA);
-//    	
+
 //        Set subjectset = new HashSet<Subjects>();
 //        subjectset.add(subject1);
 //        subjectset.add(subject2);

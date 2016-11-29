@@ -5,16 +5,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <meta name="viewport" content="initial-scale=1"/>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>SmartPlanner</title>
 </head>
 <body layout="row">
 <div flex layout="column" ng-controller="NavController as navCtrl" ng-cloak>
 
     <style>
-
-
     </style>
-
 
     <md-toolbar class="md-hue-2" layout="row" md-whiteframe="10" >
         <div class="md-toolbar-tools">
@@ -27,105 +24,124 @@
         </div>
     </md-toolbar>
 
+    <!Calendar UI>
 
-    <div class = "Add event">
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-            <md-card-title>
-                <md-card-title-text>
-                    <span class="md-headline">Create Event</span>
-                </md-card-title-text>
+    <div layout ="column" layout-padding>
+        <div ng-controller="calendarCtrl">
 
-                <md-content layout-padding>
-                    <div>
-                        <form ng-submit="CardController.addSubject(subject, date, event, details)">
-                            <div layout-gt-xs="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Enter Subject</label>
-                                    <input required name= "subject" type="text" ng-model="subject">
-                                </md-input-container>
+            <div layout="column" ng-controller="calendarCtrl">
+                <calendar-md flex layout layout-fill
+                             calendar-direction="direction"
+                             on-prev-month="prevMonth"
+                             on-next-month="nextMonth"
+                             on-day-click="dayClick"
+                             title-format="'MMMM y'"
+                             ng-model='selectedDate'
+                             week-starts-on="firstDayOfWeek"></calendar-md>
+                <div>
+                    <md-list ng-repeat="subject in allSubjects">
+                        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{subject.name}}</span>
+                                    <span class="md-subhead">{{subject.id}}</span>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media"></div>
+                                </md-card-title-media>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button>Action 1</md-button>
+                                <md-button>Action 2</md-button>
+                            </md-card-actions>
+                        </md-card>
+                    </md-list>
+                </div>
+            </div>
 
-                                <md-input-container>
-                                    <label>Enter date</label>
-                                    <md-datepicker required name= "Date" type="text" ng-model="date"></md-datepicker>
-                                </md-input-container>
-                            </div>
-
-                            <div layout-gt-s="row">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Enter event</label>
-                                    <input required name= "Event" type="text" ng-model="event">
-                                </md-input-container>
-                            </div>
-
-                            <divlayout-gt-xs="row">
-                            <md-input-container class="md-block">
-                                <label>Enter details</label>
-                                <input ng-model="details">
-                            </md-input-container>
-                    </div>
-
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button type = "submit">Add Event</md-button>
-                    </md-card-actions>
-
-                    </form>
-    </div>
-    </md-content>
-    </md-card-title>
-    </md-card>
-</div>
-
-
-<div ng-controller="calendarCtrl">
-
-    <div>
-
-    </div>
-
-    <div layout="column" ng-controller="calendarCtrl">
-        <calendar-md flex layout layout-fill
-                     calendar-direction="direction"
-                     on-prev-month="prevMonth"
-                     on-next-month="nextMonth"
-                     on-day-click="dayClick"
-                     title-format="'MMMM y'"
-                     ng-model='selectedDate'
-                     week-starts-on="firstDayOfWeek"></calendar-md>
-        <div>
-            <md-list ng-repeat="subject in allSubjects">
-                <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">{{subject.name}}</span>
-                            <span class="md-subhead">{{subject.id}}</span>
-                        </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-lg card-media"></div>
-                        </md-card-title-media>
-                    </md-card-title>
-                    <md-card-actions layout="row" layout-align="end center">
-                        <md-button>Action 1</md-button>
-                        <md-button>Action 2</md-button>
-                    </md-card-actions>
-                </md-card>
-            </md-list>
         </div>
-        <--Set the initial month here. "8" is September. Defaults to current-->
-        data-start-month="8"
-        <--Set the initial year here. Defaults to current.-->
-        data-start-year="2014"
-        tooltips="tooltips"
-        day-format="dayFormat"
-        day-label-format="'EEE'"
-        day-label-tooltip-format="'EEEE'"
-        day-tooltip-format="'fullDate'"
-        day-content="setDayContent"
-        disable-future-selection="false"
-        <-- Allows dates in the future to be disabled and unselectable. Defaults to false-->
-        {{msg}}
-        {{dateSelected}}
-        {{day}}
     </div>
+
+    <div layout = "column" ng-controller = "calendarCtrl">
+        <div flex = "20">
+            <md-card>
+                <md-card-header>Create Event</md-card-header>
+
+                <div layout ="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Enter Subject</label>
+                        <input required name= "subject" type="text" ng-model="newSubject.subjectName">
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Enter date</label>
+                        <md-datepicker required name= "Date" type="text" ng-model="newSubject.date"></md-datepicker>
+                    </md-input-container>
+                </div>
+
+                <div layout = "row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Enter event</label>
+                        <textarea required name= "Event" type="text" ng-model="newSubject.cardText"></textarea>
+                    </md-input-container>
+                </div>
+
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button type = "submit">Add Event</md-button>
+                </md-card-actions>
+
+            </md-card>
+        </div>
+    </div>
+
+    <!--<div layout = "column" layout-padding>-->
+
+        <!--<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>-->
+            <!--<md-card-title>-->
+                <!--<md-card-title-text>-->
+                    <!--<span class="md-headline">Create Event</span>-->
+                <!--</md-card-title-text>-->
+
+                <!--<md-content layout-padding>-->
+                    <!--<div>-->
+                        <!--<form ng-submit="CardController.addSubject(subject, date, event, details)">-->
+                            <!--<div layout-gt-xs="row">-->
+                                <!--<md-input-container class="md-block" flex-gt-sm>-->
+                                    <!--<label>Enter Subject</label>-->
+                                    <!--<input required name= "subject" type="text" ng-model="subject">-->
+                                <!--</md-input-container>-->
+
+                                <!--<md-input-container>-->
+                                    <!--<label>Enter date</label>-->
+                                    <!--<md-datepicker required name= "Date" type="text" ng-model="date"></md-datepicker>-->
+                                <!--</md-input-container>-->
+                            <!--</div>-->
+
+                            <!--<div layout-gt-s="row">-->
+                                <!--<md-input-container class="md-block" flex-gt-sm>-->
+                                    <!--<label>Enter event</label>-->
+                                    <!--<input required name= "Event" type="text" ng-model="event">-->
+                                <!--</md-input-container>-->
+                            <!--</div>-->
+
+                            <!--<divlayout-gt-xs="row">-->
+                                <!--<md-input-container class="md-block">-->
+                                    <!--<label>Enter details</label>-->
+                                    <!--<input ng-model="details">-->
+                                <!--</md-input-container>-->
+                            <!--</div>-->
+
+                            <!--<md-card-actions layout="row" layout-align="end center">-->
+                            <!--<md-button type = "submit">Add Event</md-button>-->
+                            <!--</md-card-actions>-->
+                         <!--</form>-->
+                    <!--</div>-->
+                <!--</md-content>-->
+            <!--</md-card-title>-->
+        <!--</md-card>-->
+    <!--</div>-->
+
+
 
 </div>
 

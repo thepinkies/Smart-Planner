@@ -30,6 +30,12 @@ app.controller('CardController', ['$mdSidenav', '$http', '$mdDialog', '$route', 
 
    cards = this;
 
+   cards.newSubject = {
+
+
+
+   };
+
    $http.get('/cs480/getId/' + "adrian").success(function (response) {
         cards.subjects = response;
    });
@@ -53,6 +59,12 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     $scope.daySelected = "";
     $scope.dayFormat = "dd";
 
+        $scope.newSubject = {
+            date: null,
+            subjectName: null,
+            cardText: null,
+        };
+
     // To select a single date, make sure the ngModel is not an array.
     $scope.selectedDate = null;
 
@@ -68,6 +80,7 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     $scope.dayClick = function(date) {
       $scope.msg = "You clicked " + $filter("date")(date, "MM/d/y");
       $scope.dateSelected = $filter("date")(date, "y-MM-dd");
+      $scope.newSubject.date = $filter("date")(date, "y-MM-dd");
 
         $http.get("/cs480/getDate/" + "adrian" + "/" + $scope.dateSelected).success(function(response){
                 $scope.allSubjects = response;
@@ -106,6 +119,11 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
         return deferred.promise;
 
     };
+//
+//    $scope.enterSubject = "";
+//    $scope.enterText = "";
+//
+
 
 });
 

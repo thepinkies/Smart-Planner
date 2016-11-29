@@ -1,29 +1,14 @@
 package edu.csupomona.cs480.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.apache.commons.math3.random.JDKRandomGenerator;
-import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.ui.Model;
 
 import edu.csupomona.cs480.App;
 import edu.csupomona.cs480.data.Person;
@@ -55,6 +40,16 @@ public class WebController {
 	@Autowired
 	private UserManager userManager;
 	
+	@RequestMapping(value = "/cs480/login", method = RequestMethod.POST)
+	boolean validId(@RequestBody Person person) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Person correct = (Person) session.createQuery("FROM Person where username = '"+ person.getName()+ "'" + 
+		" AND password = '" + person.getPassword() + "'").uniqueResult();
+		if(correct == null)
+			return false;
+		return true;
+	}
+	
 	/*********
 	 * This basically get all user info by entering the username
 	 * @param userId
@@ -79,6 +74,28 @@ public class WebController {
 		session.close();
 	}
 
+	@RequestMapping(value = "/cs480/deleteCard/{userId}", method = RequestMethod.GET)
+	int deleteCardfromId(@PathVariable("userId") String userId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		Subjects subject = (Subjects) session.createQuery("FROM Subjects where id = '"+ userId + "'").uniqueResult();
+		session.delete(subject);
+		tx.commit();
+		return 1;
+	}
+	
+	@RequestMapping(value = "/cs480/updateCard/{userId}", method = RequestMethod.GET)
+	int updateCardfromId(@PathVariable("userId") String userId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		Subjects subject = (Subjects) session.createQuery("FROM Subjects where id = '"+ userId + "'").uniqueResult();
+		subject.setSubjectName("cs210");
+		session.update(subject);
+		tx.commit();
+		return 1;
+	}
+	
+	
 
 	/**
 	 * This is a simple example of how the HTTP API works.

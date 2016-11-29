@@ -54,7 +54,7 @@ CREATE TABLE `subjects` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `cardtext` TEXT NOT NULL,
-  `date` int(11) unsigned DEFAULT NULL,  
+  `date` DATE DEFAULT NULL,  
   `user_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   foreign key(user_id) references person(id)

@@ -80,8 +80,6 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     $scope.dayClick = function(date) {
       $scope.msg = "You clicked " + $filter("date")(date, "MM/d/y");
       $scope.dateSelected = $filter("date")(date, "y-MM-dd");
-      $scope.newSubject.date = $filter("date")(date, "y-MM-dd");
-
         $http.get("/cs480/getDate/" + "adrian" + "/" + $scope.dateSelected).success(function(response){
                 $scope.allSubjects = response;
         })
@@ -122,6 +120,10 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
         }, 1000);
         return deferred.promise;
 
+    };
+
+    $scope.deleteSubject = function(id) {
+        $http.delete('/cs480/deleteCard/' + id).success(function(response){});
     };
 //
 //    $scope.enterSubject = "";

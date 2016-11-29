@@ -75,7 +75,7 @@ public class WebController {
 		session.close();
 	}
 
-	@RequestMapping(value = "/cs480/deleteCard/{userId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/cs480/deleteCard/{userId}", method = RequestMethod.DELETE)
 	int deleteCardfromId(@PathVariable("userId") String userId) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();

@@ -21,11 +21,7 @@ import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
@@ -64,7 +60,7 @@ public class WebController {
 	 * @param userId
 	 * @return
 	 */
-	@RequestMapping(value = "/cs480/getid/{userId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/cs480/getId/{userId}", method = RequestMethod.GET)
 	Set<Subjects> getIdfromUserName(@PathVariable("userId") String userId) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Person person = (Person) session.createQuery("FROM Person where username = '"+ userId + "'").uniqueResult();
@@ -73,6 +69,16 @@ public class WebController {
 		Set<Subjects> personList = session.get(Person.class, person.getId()).getSubjects();
 		return personList;
 	}
+
+	@RequestMapping(value = "/cs480/putId/{userId}", method = RequestMethod.PUT)
+	void putIdfromUserName(@PathVariable("userId") String userId, @RequestBody Subjects subjects) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Person person = (Person) session.createQuery("FROM Person where username = '"+ userId + "'").uniqueResult();
+		Subjects toAddSubject = new Subjects(subjects.getSubjectName(), subjects.getCardText(), subjects.getDate(), person);
+		session.save(toAddSubject);
+		session.close();
+	}
+
 
 	/**
 	 * This is a simple example of how the HTTP API works.

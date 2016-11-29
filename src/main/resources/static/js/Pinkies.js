@@ -30,9 +30,16 @@ app.controller('CardController', ['$mdSidenav', '$http', '$mdDialog', '$route', 
 
    cards = this;
 
-   $http.get('/cs480/testing/').success(function (response) {
+   $http.get('/cs480/getId/' + "adrian").success(function (response) {
         cards.subjects = response;
    });
+
+
+   cards.exampleSubject = {date: "11", subjectName: "CS 431", cardText: "HELLO"};
+
+   $http.put("/cs480/putId/" + "adrian", cards.exampleSubject).success( function(response){});
+
+
 
 
 

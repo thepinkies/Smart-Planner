@@ -26,10 +26,10 @@
 
     <!Calendar UI>
 
-    <div layout ="column" layout-padding>
-        <div ng-controller="calendarCtrl">
 
-            <div layout="column" ng-controller="calendarCtrl">
+    <div layout ="column" layout-padding ng-controller="calendarCtrl">
+
+            <div layout="column">
                 <calendar-md flex layout layout-fill
                              calendar-direction="direction"
                              on-prev-month="prevMonth"
@@ -38,32 +38,10 @@
                              title-format="'MMMM y'"
                              ng-model='selectedDate'
                              week-starts-on="firstDayOfWeek"></calendar-md>
-                <div>
-                    <md-list ng-repeat="subject in allSubjects">
-                        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
-                            <md-card-title>
-                                <md-card-title-text>
-                                    <span class="md-headline">{{subject.name}}</span>
-                                    <span class="md-subhead">{{subject.id}}</span>
-                                </md-card-title-text>
-                                <md-card-title-media>
-                                    <div class="md-media-lg card-media"></div>
-                                </md-card-title-media>
-                            </md-card-title>
-                            <md-card-actions layout="row" layout-align="end center">
-                                <md-button>Action 1</md-button>
-                                <md-button>Action 2</md-button>
-                            </md-card-actions>
-                        </md-card>
-                    </md-list>
-                </div>
+
             </div>
 
-        </div>
-    </div>
-
-    <div layout = "column" ng-controller = "calendarCtrl">
-        <div flex = "20">
+        <div layout = "row" flex = "20">
             <md-card>
                 <md-card-header>Create Event</md-card-header>
 
@@ -75,7 +53,7 @@
 
                     <md-input-container>
                         <label>Enter date</label>
-                        <md-datepicker required name= "Date" type="text" ng-model="newSubject.date"></md-datepicker>
+                        <input required name= "Date" type="text" ng-model="newSubject.date"></input>
                     </md-input-container>
                 </div>
 
@@ -87,10 +65,32 @@
                 </div>
 
                 <md-card-actions layout="row" layout-align="end center">
-                    <md-button type = "submit">Add Event</md-button>
+                    <md-button ng-click="addNewSubject()">Add Event</md-button>
                 </md-card-actions>
 
             </md-card>
+
+                <div layout="row">
+                    <md-list ng-repeat="subject in allSubjects">
+                        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">{{subject.subjectName}}</span>
+                                    <text class="md-subhead">{{subject.cardText}}</text>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media"></div>
+                                </md-card-title-media>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button>Delete</md-button>
+                                <md-button>Update</md-button>
+                            </md-card-actions>
+                        </md-card>
+                    </md-list>
+                </div>
+
+
         </div>
     </div>
 

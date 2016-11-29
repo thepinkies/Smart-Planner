@@ -3,7 +3,8 @@ var app = angular.module('Pinkies', ['ngMaterial', 'ngSanitize', 'ngCsv', 'ngMes
 app.config(function ($httpProvider, $mdThemingProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $mdThemingProvider.theme('default').primaryPalette('blue-grey').accentPalette('blue-grey').backgroundPalette('grey');
+    $mdThemingProvider.theme('default').primaryPalette('pink', {
+    'default': '100', 'hue-1': 'A100', 'hue-2': 'A100', 'hue-3': 'A100',}).accentPalette('pink').backgroundPalette('grey');
 });
 
 //Side Navigation Controller
@@ -56,7 +57,6 @@ app.controller('CardController', ['$mdSidenav', '$http', '$mdDialog', '$route', 
 
 app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
 
-    $scope.daySelected = "";
     $scope.dayFormat = "dd";
 
         $scope.newSubject = {
@@ -86,6 +86,10 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
                 $scope.allSubjects = response;
         })
 
+    };
+
+    $scope.addNewSubject=function() {
+        $http.put("/cs480/putId/" + "adrian", $scope.newSubject).success(function(response){});
     };
 
     //      $scope.exampleSubject = {date: $scope.dateSelected, subjectName: "CS 599", cardText: "HELLO"};

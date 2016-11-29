@@ -27,7 +27,7 @@ public class Subjects {
 	private int id;
 	private String name;
 	private String cardtext;
-	private int date;
+	private String date;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
@@ -39,7 +39,7 @@ public class Subjects {
 		
 	}
 	
-	public Subjects(String name, String cardtext, int date, Person person) {
+	public Subjects(String name, String cardtext, String date, Person person) {
         this.name = name;
         this.cardtext = cardtext;
         this.date = date;
@@ -54,11 +54,11 @@ public class Subjects {
 		this.id = id;
 	}
 	
-	public int getDate(){
+	public String getDate(){
 		return date;
 	}
 	
-	public void setDate(int date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	

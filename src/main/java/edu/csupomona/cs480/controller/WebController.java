@@ -1,5 +1,6 @@
 package edu.csupomona.cs480.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -94,8 +95,28 @@ public class WebController {
 		tx.commit();
 		return 1;
 	}
-	
-	
+
+
+	@RequestMapping(value = "/cs480/getDate/{userId}/{dateSelected}", method = RequestMethod.GET)
+	Set<Subjects> getSubject(@PathVariable("userId") String userId, @PathVariable("dateSelected") String date) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Person person = (Person) session.createQuery("FROM Person where username = '"+ userId + "'").uniqueResult();
+		if(person == null)
+			return null;
+		Set<Subjects> personList = session.get(Person.class, person.getId()).getSubjects();
+		Set<Subjects> sortedlist = new HashSet<>();
+
+		for(Subjects s: personList)
+		{
+			if(s.getDate().equals(date))
+			{
+				sortedlist.add(s);
+			}
+		}
+		return sortedlist;
+	}
+
+
 
 	/**
 	 * This is a simple example of how the HTTP API works.

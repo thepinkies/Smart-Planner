@@ -24,7 +24,14 @@
                              on-day-click="dayClick"
                              title-format="'MMMM y'"
                              ng-model='selectedDate'
-                              week-starts-on="firstDayOfWeek"></calendar-md>
+                             tooltips="tooltips"
+                             day-format="dayFormat"
+                             day-label-format="'EEE'"
+                             day-label-tooltip-format="'EEEE'"
+                             day-tooltip-format="'fullDate'"
+                             day-content="setDayContent"
+                             disable-future-selection="false">
+                </calendar-md>
         </div>
 
         <div layout = "column" layout-padding flex = "20">
@@ -83,6 +90,7 @@
                                 </md-card-title-media>
                             </md-card-title>
                             <md-card-actions layout="row" layout-align="end center">
+                                <md-progress-linear ng-hide="!sending" md-mode="indeterminate"></md-progress-linear>
                                 <md-button ng-click="deleteSubject(subject.id)">Delete</md-button>
                                 <md-button ng-click="updateCard(subject)">Update</md-button>
                             </md-card-actions>

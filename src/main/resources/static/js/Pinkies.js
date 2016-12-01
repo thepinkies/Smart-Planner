@@ -132,9 +132,13 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
 
     };
 
+    $scope.sending = false;
+
     $scope.deleteSubject = function(id) {
+        $scope.sending = true;
         $http.delete('/cs480/deleteCard/' + id).success(function(response){
-            $http.get('/cs480/getId/' + 'adrian').success(function(response){
+            $scope.sending = false;
+            $http.get('/cs480/getDate/' + 'adrian/' + $scope.currentDate).success(function(response){
                 $scope.allSubjects = response;
             });
        });
@@ -159,7 +163,9 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     };
 
     $scope.updateCard = function(subject) {
+       $scope.sending = true;
        $http.put("/cs480/updateCard/" + subject.id, subject).success(function (response){
+            $scope.sending = false;
             $http.get('/cs480/getId/' + 'adrian').success(function(response){});
 
        });

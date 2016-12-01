@@ -57,13 +57,17 @@ app.controller('CardController', ['$mdSidenav', '$http', '$mdDialog', '$route', 
 
 app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
 
+    $scope.user = "User: PINKIES"
     $scope.dayFormat = "dd";
+    $scope.currentDate = "";
 
         $scope.newSubject = {
             date: null,
             subjectName: null,
             cardText: null,
         };
+
+        $scope.addSubject = [];
 
     // To select a single date, make sure the ngModel is not an array.
     $scope.selectedDate = null;
@@ -80,6 +84,8 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     $scope.dayClick = function(date) {
       $scope.msg = "You clicked " + $filter("date")(date, "MM/d/y");
       $scope.dateSelected = $filter("date")(date, "y-MM-dd");
+      $scope.newSubject.date = $filter("date")(date, "y-MM-dd");
+      $scope.currentDate = $filter("date")(date, "y-MM-dd");
         $http.get("/cs480/getDate/" + "adrian" + "/" + $scope.dateSelected).success(function(response){
                 $scope.allSubjects = response;
         })
@@ -87,7 +93,11 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     };
 
     $scope.addNewSubject=function() {
-        $http.put("/cs480/putId/" + "adrian", $scope.newSubject).success(function(response){});
+        $http.put("/cs480/putId/" + "adrian", $scope.newSubject).success(function(response){
+            $http.get("/cs480/getDate/" + "adrian" + "/" + $scope.currentDate).success(function(response){
+                    $scope.allSubjects = response;
+            });
+        });
     };
 
     //      $scope.exampleSubject = {date: $scope.dateSelected, subjectName: "CS 599", cardText: "HELLO"};
@@ -123,9 +133,40 @@ app.controller("calendarCtrl", function($scope, $filter, $http, $q) {
     };
 
     $scope.deleteSubject = function(id) {
-        $http.delete('/cs480/deleteCard/' + id).success(function(response){});
+        $http.delete('/cs480/deleteCard/' + id).success(function(response){
+            $http.get('/cs480/getId/' + 'adrian').success(function(response){
+                $scope.allSubjects = response;
+            });
+       });
     };
-//
+
+    $scope.addCard = function(newName, date, newText) {
+        $scope.addSubject.push({
+                   date: date,
+                   subjectName: newName,
+                   cardText: newText,
+       });
+    };
+
+    $scope.remove = function(card) {
+        var index = $scope.addSubject.indexOf(card);
+        $scope.addSubject.splice(index, 1);
+    };
+
+
+    $scope.pushCards=function() {
+        $http.put("/cs480/putId/" + "adrian", $scope.newSubject).success(function(response){});
+    };
+
+    $scope.updateCard = function(subject) {
+       $http.put("/cs480/updateCard/" + subject.id, subject).success(function (response){
+            $http.get('/cs480/getId/' + 'adrian').success(function(response){});
+
+       });
+
+    };
+
+
 //    $scope.enterSubject = "";
 //    $scope.enterText = "";
 //

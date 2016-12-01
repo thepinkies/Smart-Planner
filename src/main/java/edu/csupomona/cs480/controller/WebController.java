@@ -85,13 +85,14 @@ public class WebController {
 		return 1;
 	}
 	
-	@RequestMapping(value = "/cs480/updateCard/{userId}", method = RequestMethod.GET)
-	int updateCardfromId(@PathVariable("userId") String userId) {
+	@RequestMapping(value = "/cs480/updateCard/{userId}", method = RequestMethod.PUT)
+	int updateCardfromId(@PathVariable("userId") String userId, @RequestBody Subjects subjects) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-		Subjects subject = (Subjects) session.createQuery("FROM Subjects where id = '"+ userId + "'").uniqueResult();
-		subject.setSubjectName("cs210");
-		session.update(subject);
+		Subjects updateSubject = (Subjects) session.createQuery("FROM Subjects where id = '"+ userId + "'").uniqueResult();
+		updateSubject.setSubjectName(subjects.getSubjectName());
+		updateSubject.setCardText(subjects.getCardText());
+		session.update(updateSubject);
 		tx.commit();
 		return 1;
 	}

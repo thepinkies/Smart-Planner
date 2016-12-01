@@ -8,75 +8,75 @@
     <title>SmartPlanner</title>
 </head>
 <body layout="row">
-<div flex layout="column" ng-controller="NavController as navCtrl" ng-cloak>
-
-    <style>
-    </style>
-
-    <md-toolbar class="md-hue-2" layout="row" md-whiteframe="10" >
-        <div class="md-toolbar-tools">
-
-            <md-button ng-click="navCtrl.toggleSidenav('left')" hide-gt-md class="md-icon-button">
-            </md-button>
-
-            <h1>Smart Planner</h1>
-
-        </div>
-    </md-toolbar>
-
+<div flex layout="column" ng-controller="calendarCtrl" ng-cloak la>
     <!Calendar UI>
 
+        <div layout="row">
+            <img src="PlannerHeader.png" alt="logo" style="height:100%; width:100%;">
+        </div>
 
-    <div layout ="column" layout-padding ng-controller="calendarCtrl">
+        <div layout="column" flex-fill layout-padding>
 
-            <div layout="column">
-                <calendar-md flex layout layout-fill
+                <calendar-md flex layout="column" layout-fill
                              calendar-direction="direction"
                              on-prev-month="prevMonth"
                              on-next-month="nextMonth"
                              on-day-click="dayClick"
                              title-format="'MMMM y'"
                              ng-model='selectedDate'
-                             week-starts-on="firstDayOfWeek"></calendar-md>
+                              week-starts-on="firstDayOfWeek"></calendar-md>
+        </div>
 
-            </div>
+        <div layout = "column" layout-padding flex = "20">
 
-        <div layout = "row" flex = "20">
-            <md-card>
-                <md-card-header>Create Event</md-card-header>
 
-                <div layout ="row">
-                    <md-input-container class="md-block" flex-gt-sm>
-                        <label>Enter Subject</label>
-                        <input required name= "subject" type="text" ng-model="newSubject.subjectName">
-                    </md-input-container>
+                <div layout="column" flex>
+                    <md-button class="md-fab md-mini md-primary" aria-label="Use Android" ng-click="addCard(newCard.newName, newSubject.date, newCard.newText)">
+                        <md-icon md-svg-src="/CSS/add.svg" style="color: greenyellow;"></md-icon>
+                    </md-button>
 
-                    <md-input-container>
-                        <label>Enter date</label>
-                        <input required name= "Date" type="text" ng-model="newSubject.date"></input>
-                    </md-input-container>
-                </div>
+                    <div>
+                        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <div layout = "row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Enter Subject</label>
+                                        <input required name= "subject" type="text" ng-model="newSubject.subjectName">
+                                    </md-input-container>
 
-                <div layout = "row">
-                    <md-input-container class="md-block" flex-gt-sm>
-                        <label>Enter event</label>
-                        <textarea required name= "Event" type="text" ng-model="newSubject.cardText"></textarea>
-                    </md-input-container>
-                </div>
+                                    <md-input-container>
+                                        <label>Enter date</label>
+                                        <input required name= "Date" type="text" ng-model="newSubject.date"></input>
+                                    </md-input-container>
 
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button ng-click="addNewSubject()">Add Event</md-button>
-                </md-card-actions>
+                                    </div>
+                                </md-card-title-text>
+                            </md-card-title>
 
-            </md-card>
+                                <md-card-title-media md-padding>
+                                    <div layout-padding>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Enter event</label>
+                                        <textarea required name= "Event" type="text" ng-model="newSubject.cardText"></textarea>
+                                    </md-input-container>
+                                    </div>
+                                </md-card-title-media>
+                            <md-card-actions layout="row" layout-align="end center">
+                                <md-button ng-click="addNewSubject(newCard)" flex>Save</md-button>
+                            </md-card-actions>
+                        </md-card>
+                    </div>
 
-                <div layout="row">
-                    <md-list ng-repeat="subject in allSubjects">
+                    <div ng-repeat="subject in allSubjects">
                         <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
                             <md-card-title>
                                 <md-card-title-text>
                                     <span class="md-headline">{{subject.subjectName}}</span>
-                                    <text class="md-subhead">{{subject.cardText}}</text>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Daily Tasks</label>
+                                        <textarea required name= "Event" type="text" rows="7" ng-model="subject.cardText"></textarea>
+                                    </md-input-container>
                                 </md-card-title-text>
                                 <md-card-title-media>
                                     <div class="md-media-lg card-media"></div>
@@ -84,15 +84,15 @@
                             </md-card-title>
                             <md-card-actions layout="row" layout-align="end center">
                                 <md-button ng-click="deleteSubject(subject.id)">Delete</md-button>
-                                <md-button>Update</md-button>
+                                <md-button ng-click="updateCard(subject)">Update</md-button>
                             </md-card-actions>
                         </md-card>
-                    </md-list>
+                    </div>
                 </div>
 
 
         </div>
-    </div>
+</div>
 
     <!--<div layout = "column" layout-padding>-->
 
@@ -143,7 +143,7 @@
 
 
 
-</div>
+
 
 <!-- Angular Material Dependencies -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
